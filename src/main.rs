@@ -8,30 +8,36 @@ fn main() {
     // Gerando um numero aleatorio
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    println!("Please input your guess");
+    loop {
+        println!("Please input your guess");
 
-    let mut guess = String::new();
-    // Variaveis sao imutaveis por padrao
-    // e necessario declarar como mutavel (mut)
-    // para alterar seu valor
+        let mut guess = String::new();
+        // Variaveis sao imutaveis por padrao
+        // e necessario declarar como mutavel (mut)
+        // para alterar seu valor
 
-    // Usando a instancia de Stdin fornecida por
-    // std::io::stdin() para ler dados inseridos no terminal
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
-    // O metodo expect finaliza o programa e exibe a
-    // mensagem de erro informada caso o resultado
-    // retornado seja o enum Result<Error>
+        // Usando a instancia de Stdin fornecida por
+        // std::io::stdin() para ler dados inseridos no terminal
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+        // O metodo expect finaliza o programa e exibe a
+        // mensagem de erro informada caso o resultado
+        // retornado seja o enum Result<Error>
 
-    // Convertendo String para u32
-    let guess: u32 = guess.trim().parse().expect("Please type a number");
+        // Convertendo String para u32
+        let guess: u32 = guess.trim().parse().expect("Please type a number");
 
-    println!("You guessed: {}", guess);
+        println!("You guessed: {}", guess);
 
-    match guess.cmp(&secret_number) {
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
+        // Comparando o numero informado e o gerado
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
+            },
+        }
     }
 }
