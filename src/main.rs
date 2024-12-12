@@ -26,7 +26,10 @@ fn main() {
         // retornado seja o enum Result<Error>
 
         // Convertendo String para u32
-        let guess: u32 = guess.trim().parse().expect("Please type a number");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
 
         println!("You guessed: {}", guess);
 
